@@ -24,7 +24,7 @@ namespace GitMSBuildTasks
                 using (var repo = new Repository(LocalPath))
                 {
                     Commit recent = GetMostRecentCommit(repo);
-                    repo.Commits.
+                    
                     //var tag = repo.Tags.OrderByDescending(x => x.Name, new AlphanumComparatorFast()).First();
                     //var refs = repo.Refs.ToList();
                     //var lastTagShortHash = tag.Annotation.TargetId.Sha.Substring(0, 7);
@@ -49,13 +49,21 @@ namespace GitMSBuildTasks
         public Tag GetMostRecentTagByEnumeration(Repository repo)
         {
             var tagList = repo.Tags;
+            Tag recentTag = null;
 
             foreach (var commit in repo.Commits)
             {
-                // Commits are 
+                // Commits are actually ordered already in reverse chronological order
+                var tag = tagList.Where(x => x.Annotation.TargetId.Sha == commit.Sha).FirstOrDefault();
+
+                if (tag != null)
+                {
+                    recentTag = tag;
+                    break;
+                }
             }
 
-            return null;
+            return recentTag;
         }
     }
 }

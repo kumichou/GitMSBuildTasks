@@ -39,9 +39,9 @@ namespace GitMSBuildTasksTests
         [Test]
         public void CommitTaskCanFindMostRecentTagByEnumeration()
         {
-            string tagName = _commitInfo.GetMostRecentTagByEnumeration(_commitInfo.CurrentRepository).Annotation.Name;
-
-            
+            var tag = _commitInfo.GetMostRecentTagByEnumeration(_commitInfo.CurrentRepository);
+            string tagName = "0.1.0.0";
+            Assert.AreEqual(tagName, tag.Annotation.Name);
         }
     }
 }
