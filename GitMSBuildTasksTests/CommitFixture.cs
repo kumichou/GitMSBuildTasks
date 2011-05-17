@@ -39,12 +39,32 @@ namespace GitMSBuildTasksTests
         [Test]
         public void CommitTaskCanFindMostRecentTagByEnumeration()
         {
-            var tag = _commitInfo.GetMostRecentTagByEnumeration(_commitInfo.CurrentRepository);
+            var tag = _commitInfo.GetMostRecentTagByEnumeration(_commitInfo.CurrentRepository.Commits, _commitInfo.CurrentRepository.Tags);
             string tagName = "0.1.0.0";
             Assert.AreEqual(tagName, tag.Annotation.Name);
             Assert.AreEqual("54ada48803737d8bd3a1f851263dd745a6a83cfd", tag.Annotation.TargetId.Sha);
         }
 
-        
+        [Test]
+        public void FindNumberOfCommitsSinceLastTag()
+        {
+            var commit = _commitInfo.CurrentRepository.Lookup<Commit>("4c52af060209691691eae90463a8428b38d2cf43");
+            var tagListFromCommit = _commitInfo.CurrentRepository.Commits.StartingAt("4c52af060209691691eae90463a8428b38d2cf43");
+            var tag = _commitInfo.GetMostRecentTagByEnumeration(tagListFromCommit, _commitInfo.CurrentRepository.Tags);
+            var revisionCount = _commitInfo.GetRevisionCountToClosestTag(commit);
+
+            Assert.AreEqual(1, revisionCount);
+        }
+
+        [Test]
+        public void GetShortHashOfCommit()
+        {
+            var commit = _commitInfo.CurrentRepository.Lookup<Commit>("4c52af060209691691eae90463a8428b38d2cf43");
+
+            // Short hash is the first 7 characters of Sha hash
+            var shortHash = commit.Sha.Substring(0, 7);
+
+            Assert.AreEqual(shortHash, _commitInfo.GetCommitShortHash(commit));
+        }
     }
 }
