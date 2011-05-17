@@ -42,6 +42,9 @@ namespace GitMSBuildTasksTests
             var tag = _commitInfo.GetMostRecentTagByEnumeration(_commitInfo.CurrentRepository);
             string tagName = "0.1.0.0";
             Assert.AreEqual(tagName, tag.Annotation.Name);
+            Assert.AreEqual("54ada48803737d8bd3a1f851263dd745a6a83cfd", tag.Annotation.TargetId.Sha);
         }
+
+        
     }
 }
