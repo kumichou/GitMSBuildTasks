@@ -1,0 +1,20 @@
+= GitMSBuildTasks
+
+A set of MSBuild tasks that allow you to interact with a Git Repository. Initially, querying tags & commits will be supported.
+
+== Basic Usage
+In your MSBuild file:
+<UsingTask AssemblyFile="(RelativePathTo)GitMSBuildTasks.dll" TaskName="GitMSBuildTasks.GitCommitInfo"/>
+
+To find a particular Commit based on the hash. The LocalPath should point to where the .git directory is on the file system that you want to query.
+
+The LastTag* Properties are based on the last tag that is closest prior to the Commit you are starting from.
+
+<GitCommitInfo CommitHash="$(GitCommitHash)" LocalPath="$.git\">
+	<Output TaskParameter="LastCommitHash" PropertyName="LastCommitHash" />
+	<Output TaskParameter="LastCommitMessage" PropertyName="LastCommitMessage" />
+	<Output TaskParameter="RevisionCount" PropertyName="RevisionCount" />
+	<Output TaskParameter="LastTagName" PropertyName="LastTagName" />
+	<Output TaskParameter="LastTagMessage" PropertyName="LastTagMessage" />
+	<Output TaskParameter="LastTagCommitHash" PropertyName="LastTagCommitHash" />
+</GitCommitInfo>

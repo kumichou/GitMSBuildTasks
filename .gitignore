@@ -38,6 +38,7 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 *.VisualState.xml
 *.nunit
+*.docstates
 
 #Project files
 [Bb]uild/

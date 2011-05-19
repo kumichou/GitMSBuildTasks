@@ -1,3 +1,0 @@
-GitMSBuildTasks
-
-A set of MSBuild tasks that allow you to interact with a Git Repository. Initially, querying tags & commits will be supported.
